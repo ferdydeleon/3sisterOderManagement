@@ -60,7 +60,7 @@ class UserController extends Controller
         $validated['password'] =  bcrypt($validated['password']);
         $user =  User::create($validated);
         auth()->login($user);
-        //return $user;
+        return  back()->with('message', 'Data was Successfully Registered!');
     }
 
     public function logout(Request $request){

@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class OrderlistFactory extends Factory
+class CustomerFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,10 +15,10 @@ class OrderlistFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'order' =>  $this->faker->creditCardType(),
-            'amount' =>  $this->faker->numberBetween($min = 1000, $max = 9000),
-            'payment' => $this->faker->creditCardType(),
-            'note' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
+            'phone_number' =>  $this->faker->phoneNumber(),
+            'town' =>  $this->faker->city(),
+            'barangay' =>  $this->faker->state(),
+            'street' =>  $this->faker->streetName(),
            // 'phone_number' =>  $this->faker->phoneNumber(),
            // 'town' =>  $this->faker->city(),
            // 'barangay' =>  $this->faker->state(),

@@ -1,15 +1,14 @@
 @include('partials.header',['title' => 'Create Customer'])
     <main class="bg-white max-w-lg mx-auto p-8 my-10 rounded-lg shadow-2xl">
             <section>
-                <h3 class="font-bold text-2xl">Add Customer</h3>
-
+                <h3 class="font-bold text-2xl">{{$title}}</h3>
             </section>
             <section class="mt-10">
-                <form action="/register/store" method="POST" class="flex flex-col">
+                <form action="/customer/store" method="POST" class="flex flex-col">
                     @csrf  {{-- @csrf  certificate lahat ng unauthorize post na nd galing sa system nd papasukin --}}
                     <div class="mb-6 pt-3 rounded bg-gray-200">
-                        <label for="text" class="block text-gray-700 text-sm font-bold mb-2 ml-3">
-                            Name
+                        <label for="name" class="block text-gray-700 text-sm font-bold mb-2 ml-3">
+                          Full Name
                         </label>
                         <input  type="text" name="name" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-400 px-3" value={{old('name')}} >
                     @error('name')
@@ -19,7 +18,7 @@
                     @enderror
                     </div>
                     <div class="mb-6 pt-3 rounded bg-gray-200">
-                        <label for="email" class="block text-gray-700 text-sm font-bold mb-2 ml-3">
+                        <label for="phone_number" class="block text-gray-700 text-sm font-bold mb-2 ml-3">
                             Phone Number
                         </label>
                         <input  type="number" name="phone_number"  class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4
@@ -31,15 +30,16 @@
                     @enderror
                     </div>
                     <div class="mb-6 pt-3 rounded bg-gray-200">
-                        <label for="password" class="block text-gray-700 text-sm font-bold mb-2 ml-3">
+                        <label for="town" class="block text-gray-700 text-sm font-bold mb-2 ml-3">
                             Town
                         </label>
-                        <select id="countries" name="town" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-400 px-3">
-                            <option selected>Choose Town</option>
-                            <option value="Echague">Echague</option>
-                            <option value="Alicia">Alicia</option>
-                            <option value="Santiago">Santiago</option>
-                            <option value="Cauayan">Cauayan</option>
+                        <select id="town" name="town" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-400 px-3" >
+                            <option  value="" {{old('town') == "" ? 'selected' : ''}}></option>
+                            <option  value="Echague" {{old('town') == "Echague" ? 'selected' : ''}} >Echague</option>
+                            <option  value="Alicia" {{old('town') == "Alicia" ? 'selected' : ''}} >Alicia</option>
+                            <option  value="San Mateo" {{old('town') == "San Mateo" ? 'selected' : ''}} >San Mateo</option>
+                            <option value="Santiago" {{old('town') == "Santiago" ? 'selected' : ''}} >Santiago</option>
+                            <option  value="Cauayan" {{old('town') == "Cauayan" ? 'selected' : ''}} >Cauayan</option>
                           </select>
                         @error('town')
                         <p class="text-red-500 text-xs mt-2 p-1">
@@ -48,18 +48,25 @@
                     @enderror
                     </div>
                     <div class="mb-6 pt-3 rounded bg-gray-200">
-                        <label class="block text-gray-700 text-sm font-bold mb-2 ml-3">
+                        <label for="barangays" class="block text-gray-700 text-sm font-bold mb-2 ml-3">
                            Barangays
                         </label>
-                        <select id="countries" name="barangays" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-400 px-3">
-                            <option selected>Choose a country</option>
-                            <option value="US">United States</option>
-                            <option value="CA">Canada</option>
-                            <option value="FR">France</option>
-                            <option value="DE">Germany</option>
-                          </select>
-                        {{-- <input  type="password" name="password_confirmation" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-400 px-3"> --}}
-                        @error('barangays')
+
+                     <input  type="text" name="barangay" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-400 px-3" value={{old('barangay')}}>
+                        @error('barangay')
+                        <p class="text-red-500 text-xs mt-2 p-1">
+                            {{$message}}
+                        </p>
+                    @enderror
+                    </div>
+
+                    <div class="mb-6 pt-3 rounded bg-gray-200">
+                        <label for="street" class="block text-gray-700 text-sm font-bold mb-2 ml-3">
+                           Street Name/#
+                        </label>
+
+                     <input  type="text" name="street" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-400 px-3" value={{old('street')}}>
+                        @error('street')
                         <p class="text-red-500 text-xs mt-2 p-1">
                             {{$message}}
                         </p>
@@ -67,7 +74,7 @@
                     </div>
                     <button class="bg-pink-600 hover:bg-pink-700 text-bold text-white py-2 rounded shadow-lg
                     hover:shadow-xl transition duration-200"
-                    type="submit">Submit</button>
+                    type="submit">Add New</button>
                 </form>
             </section>
     </main>

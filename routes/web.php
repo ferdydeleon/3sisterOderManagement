@@ -27,18 +27,29 @@ Route::get('/login',[UserController::class, 'login'])->name('login')->middleware
 Route::post('/login/process',[UserController::class, 'process']);
 Route::post('/logout',[UserController::class, 'logout']);
 
-
+//users
 Route::get('/register',[UserController::class, 'register']);
 Route::post('/register/store',[UserController::class, 'storeUsers']);
 
+//customers
+Route::controller(CustomerController::class)->group(function(){
+    Route::get('/customer/create', 'create');
+    Route::post('/customer/store', 'store');
+    Route::get('/customer/list', 'list');
+    Route::get('/customer/{id}', 'show');
+    Route::put('/customer/{id}', 'update');
+    Route::delete('/customer/{id}', 'delete');
+});
 
-Route::get('/customer/form',[CustomerController::class, 'addCustomersForm']);
 
-
-Route::get('/order/form',[CustomerController::class, 'addOrderForm']);
-
-
-
+//order
+Route::get('/order/form',[OrderController::class, 'create']);
+Route::post('/order/customer',[OrderController::class, 'store']);
 Route::get('/orderlist', [OrderController::class, 'orderlist'])->middleware('auth');
 Route::get('/orderlist/{id}', [OrderController::class, 'orderlistBY']);
+
+
+Route::post('/get-product-by-price',[OrderController::class, 'getPrice']);
+
+
 

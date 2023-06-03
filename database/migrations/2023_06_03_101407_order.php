@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Orderlist extends Migration
+class Order extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class Orderlist extends Migration
      */
     public function up()
     {
-        Schema::create('orderlists', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone_number');
+           // $table->string('phone_number');
             $table->string('order');
             $table->string('amount');
             $table->string('payment');
-            $table->longText('town');
-            $table->longText('barangay');
-            $table->longText('street_number');
+            $table->string('deliver_charge');
+           // $table->longText('town');
+           // $table->longText('barangay');
+           // $table->longText('street_number');
             $table->longText('note');
             $table->rememberToken();
             $table->timestamps();
@@ -39,6 +40,6 @@ class Orderlist extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orderlists');
+        Schema::dropIfExists('orders');
     }
 }

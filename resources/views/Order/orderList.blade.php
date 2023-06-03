@@ -21,6 +21,9 @@
                             Order
                         </th>
                         <th scope="col" class="py-3 px-6">
+                            Amount
+                        </th>
+                        <th scope="col" class="py-3 px-6">
                             Payment
                         </th>
                         <th scope="col" class="py-3 px-6">
@@ -30,6 +33,9 @@
                 </thead>
                 <tbody>
                     @foreach ($order as $orders )
+
+
+
                     <tr class="bg-gray-800 border-b text-white">
                         <td class="py-4 px-6">
                             {{$orders->name}}
@@ -41,12 +47,13 @@
                             {{$orders->order}}
                         </td>
                         <td class="py-4 px-6">
-                           Paid
+                            {{$orders->amount}}
+                        </td>
+                        <td class="py-4 px-6">
+                            {{$orders->payment}}
                         </td>
                         <td class="py-4 px-6">
                             {{$orders->town}}
-                            {{$orders->barangay}}
-                            {{$orders->street_number}}
                         </td>
                     </tr>
                 @endforeach
