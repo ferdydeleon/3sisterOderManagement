@@ -18,7 +18,10 @@ class OrderlistFactory extends Factory
             'order' =>  $this->faker->creditCardType(),
             'amount' =>  $this->faker->numberBetween($min = 1000, $max = 9000),
             'payment' => $this->faker->creditCardType(),
+            'deliver_charge' => $this->faker->name(),
+            'status' => $this->faker->name(),
             'note' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
+
            // 'phone_number' =>  $this->faker->phoneNumber(),
            // 'town' =>  $this->faker->city(),
            // 'barangay' =>  $this->faker->state(),

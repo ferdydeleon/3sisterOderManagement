@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Order extends Migration
+class CustomerOrder extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,20 @@ class Order extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('customer_orders', function (Blueprint $table) {
             $table->id();
             $table->string('refno');
-            $table->string('product');
-            $table->string('price');
-            $table->string('quantity');
-            $table->string('total');
+            $table->string('customer_name');
+            $table->bigInteger('total_payment');
+            $table->bigInteger('charge');
+            $table->string('mode_of_payment');
+            $table->string('payment_status');
+            $table->longText('note');
             $table->rememberToken();
             $table->timestamps();
             //
         });
-
     }
-
     /**
      * Reverse the migrations.
      *
@@ -34,6 +34,6 @@ class Order extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('customer_orders');
     }
 }

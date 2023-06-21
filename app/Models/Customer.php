@@ -21,7 +21,9 @@ class Customer extends Model
 
     // $guarded pag lahat gusto mo save tapos edit empy array mo lang
     protected $guarded = [] ;
-
+    protected $table = 'customers';
 
     use HasFactory;
+
+
 }

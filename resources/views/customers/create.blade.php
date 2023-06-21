@@ -1,4 +1,5 @@
 @include('partials.header',['title' => 'Create Customer'])
+
     <main class="bg-white max-w-lg mx-auto p-8 my-10 rounded-lg shadow-2xl">
             <section>
                 <h3 class="font-bold text-2xl">{{$title}}</h3>
@@ -33,13 +34,10 @@
                         <label for="town" class="block text-gray-700 text-sm font-bold mb-2 ml-3">
                             Town
                         </label>
-                        <select id="town" name="town" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-400 px-3" >
-                            <option  value="" {{old('town') == "" ? 'selected' : ''}}></option>
-                            <option  value="Echague" {{old('town') == "Echague" ? 'selected' : ''}} >Echague</option>
-                            <option  value="Alicia" {{old('town') == "Alicia" ? 'selected' : ''}} >Alicia</option>
-                            <option  value="San Mateo" {{old('town') == "San Mateo" ? 'selected' : ''}} >San Mateo</option>
-                            <option value="Santiago" {{old('town') == "Santiago" ? 'selected' : ''}} >Santiago</option>
-                            <option  value="Cauayan" {{old('town') == "Cauayan" ? 'selected' : ''}} >Cauayan</option>
+                        <select id="town-dropdown" name="town" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-400 px-3" >
+                            @foreach ($town as $row)
+                            <option value="{{$row->id}}"  {{$row->id ==  $row->id ? 'selected' : ''}} >{{$row->town}}</option>
+                            @endforeach
                           </select>
                         @error('town')
                         <p class="text-red-500 text-xs mt-2 p-1">
@@ -51,8 +49,9 @@
                         <label for="barangays" class="block text-gray-700 text-sm font-bold mb-2 ml-3">
                            Barangays
                         </label>
+                        <select  class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-400 px-3" id="barangay-dropdown" name="barangay" >
+                        </select>
 
-                     <input  type="text" name="barangay" class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-400 px-3" value={{old('barangay')}}>
                         @error('barangay')
                         <p class="text-red-500 text-xs mt-2 p-1">
                             {{$message}}

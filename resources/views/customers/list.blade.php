@@ -1,30 +1,25 @@
-@include('partials.header', ['title' => 'Create Customer'])
+@include('partials.header', ['title' => $title])
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
     <div class="flex items-center justify-between py-4 bg-white dark:bg-gray-500">
         <div>
-
             <!-- Dropdown menu -->
             <div id="dropdownAction"
                 class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-
-
             </div>
         </div>
-        <label for="table-search" class="sr-only">Search</label>
-        <div class="relative p-1">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
-                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd"></path>
-                </svg>
+        {{-- <label for="table-search" class="sr-only">Search dd</label> --}}
+        <form action="/customer" method="POST" class="flex items-center">
+            @csrf
+            <label for="voice-search" class="sr-only">Search</label>
+            <div class="relative w-full">
+                <input type="search" name="name" id="voice-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5
+                dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" value={{old('name')}}>
             </div>
-            <input type="text" id="table-search-users"
-                class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search for users">
-        </div>
+            <button type="submit" class="mx-2.5 inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>Search
+            </button>
+        </form>
     </div>
     <table class="w-full text-sm text-left text-gray-200 dark:text-white mx-auto">
         <thead class="text-xs  uppercase bg-gray-50 dark:bg-gray-800 dark:white">
@@ -44,36 +39,44 @@
             </tr>
         </thead>
         <tbody>
+
+            @if ($customer->isEmpty())
+            <tr  class="bg-white border-b dark:bg-gray-700 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td class="px-6 py-4" colspan="4">No Record Found!..</td>
+            </tr>
+            @else
             @foreach ($customer as $row)
-                <tr
-                    class="bg-white border-b dark:bg-gray-700 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4">
-                        {{ $row->name }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ $row->phone_number }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ $row->town }}, {{ $row->barangay }}, {{ $row->street }}
-                    </td>
-                    <td class="px-6 py-4">
-                        <!-- Modal toggle -->
+            <tr
+                class="bg-white border-b dark:bg-gray-700 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td class="px-6 py-4">
+                    {{ $row->name }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ $row->phone_number }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ $row->city }}, {{ $row->state }}, {{ $row->street }}
+                </td>
+                <td class="px-6 py-4">
+                    <!-- Modal toggle -->
+                    <form action="/customer/{{ $row->id }}" method="POST">
+                        @method('delete')
+                        @csrf
+                        <a href="/customer/{{ $row->id }}"
+                            class="inline-flex items-center px-4 py-2  hover:bg-indigo-600 text-white text-sm font-medium rounded-md">
+                           Edit</a>
+                        <button type="submit" onclick="return confirm('Are You Sure Youw Want To delete this! ?')"
+                            class="inline-flex items-center px-4 py-2  hover:bg-red-700 text-white text-sm font-medium rounded-md">
+                            Remove
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
+            @endif
 
 
-                        <form action="/customer/{{ $row->id }}" method="POST">
-                            @method('delete')
-                            @csrf
-                            <a href="/customer/{{ $row->id }}" type="button"
-                                class="inline-flex items-center px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md">
-                               Edit</a>
-                            <button type="submit" onclick="return confirm('Are You Sure Youw Want To delete this! ?')"
-                                class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md">
-                                Remove
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
+
         </tbody>
     </table>
     <div class="flex flex-col items-center mt-2">

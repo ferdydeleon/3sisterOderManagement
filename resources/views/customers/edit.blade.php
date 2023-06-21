@@ -1,4 +1,4 @@
-@include('partials.header',['title' => 'Create Customer'])
+@include('partials.header',['title' => $title])
     <main class="bg-white max-w-lg mx-auto p-8 my-10 rounded-lg shadow-2xl">
             <section>
                 <h3 class="font-bold text-2xl">{{$title}} {{$customer->name}}</h3>

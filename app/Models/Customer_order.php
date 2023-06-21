@@ -2,19 +2,12 @@
 
 namespace App\Models;
 
-use Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Customer_order extends Model
 {
     protected $guarded = [] ;
-    protected $table = 'orders';
+    protected $table = 'customer_orders';
     use HasFactory;
-
-
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class, 'id', 'id');
-    }
 }
