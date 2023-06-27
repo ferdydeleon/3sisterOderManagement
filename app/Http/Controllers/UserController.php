@@ -38,7 +38,7 @@ class UserController extends Controller
         if (auth()->attempt($validated)) {
             $request->session()->regenerate();
 
-            return redirect('/orderlist')->with('message', 'welcome back');
+            return redirect('/dashboard')->with('message', 'welcome back');
         }
 
         return back()->withErrors(['email' => 'Login failed'])->onlyInput('email');

@@ -29,13 +29,14 @@ class OrderController extends Controller
             return view('Order.orderList', ['order' => $data])->with('title', 'Order List');
         }
         if ($request->isMethod('POST')) {
-            $data = DB::table('customer_orders')
+            $data = DB::table('customer_orders as t1')
                 ->rightJoin('orders as t2', 't2.refno', '=', 't1.refno')
                 ->join('customers as t3', 't3.id', '=', 't1.customer_name')
                 ->select(DB::raw("SUM(t2.total) as grand_total"), 't1.refno', 't3.name', 't3.phone_number', 't1.total_payment', 't1.mode_of_payment', 't1.payment_status', 't1.note', 't1.created_at')
                 ->orderBy('t2.created_at', 'desc')
-                ->whereBetween('t2.created_at', [$request['start'], $request['end']])
                 ->groupBy('t2.refno')
+                ->whereBetween('t2.created_at', [$request['start'], $request['end']])
+
                 ->paginate(5);
 
             return view('Order.orderList', ['order' => $data])->with('title', 'Order List');
@@ -63,6 +64,7 @@ class OrderController extends Controller
         $uniqid = Str::random(4);
         $nameCustomer =  $request->input('customer_name');
         $mode_of_payment =  $request->input('mode_of_payment');
+        $grandtotal =  $request->input('grandtotal');
         $charge =  $request->input('charge');
         $note =  $request->input('note');
 
@@ -103,11 +105,11 @@ class OrderController extends Controller
         $info = [
             "refno" =>  $uniqid,
             "customer_name" =>  $nameCustomer,
-            "total_payment" =>  '',
+            "total_payment" =>  $grandtotal,
             "charge" => $charge == null ? 0: $charge,
             "mode_of_payment" => $mode_of_payment,
             "payment_status" => '',
-            "note" =>  $note,
+            "note" => $note == null ? '': $note,
         ];
 
         Customer_order::create($info);

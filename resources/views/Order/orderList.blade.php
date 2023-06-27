@@ -18,15 +18,15 @@
                         <input name="start" type="date"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5
                   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            value="{{ old('start') }}">
+                  value="{{ old('start', date('Y-m-d')) }}">
                         <label class="block text-gray-700 text-l font-bold  ml-1">Select date start</label>
                     </div>
                     <span class="mx-6  text-xl text-white "></span>
                     <div class="relative">
-                        <input name="end" type="date"
+                        <input name="end" type="date" placeholder="ss"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-800 focus:border-blue-800
                   block w-auto pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            value="{{ old('end') }}">
+                  value="{{ old('end', date('Y-m-d')) }}">
                         <label class="block text-gray-700 text-l font-bold  ml-1">Select date end</label>
                     </div>
 

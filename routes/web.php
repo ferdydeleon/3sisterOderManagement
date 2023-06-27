@@ -41,16 +41,30 @@ Route::controller(CustomerController::class)->group(function () {
     Route::match(['GET', 'POST'], '/customer','list');
 });
 
+
+
 //  Route::match(['GET', 'POST'], '/customer/list', [CustomerController::class, 'list'])->middleware('auth');
 
-//order
-Route::get('/order/form', [OrderController::class, 'create']);
-Route::post('/order/customer', [OrderController::class, 'store']);
-// Route::get('/orderlist', [OrderController::class, 'orderlist'])->middleware('auth');
-Route::get('/orderlist/{id}', [OrderController::class, 'orderlistBY']);
-Route::match(['GET', 'POST'], '/orderlist', [OrderController::class, 'orderlist'])->middleware('auth');
-Route::get('/view/orders/{refno}', [OrderController::class, 'viewOrder']);
-Route::get('/order/NewForm', [OrderController::class, 'NewForm']);
+Route::controller(OrderController::class)->middleware('auth')->group(function () {
+    Route::get('/order/form', 'create');
+    Route::post('/order/customer', 'store');
+    // Route::get('/orderlist', [OrderController::class, 'orderlist'])->middleware('auth');
+    Route::get('/orderlist/{id}','orderlistBY');
+    Route::match(['GET', 'POST'], '/orderlist',  'orderlist');
+    Route::get('/view/orders/{refno}','viewOrder');
+    Route::get('/order/NewForm', 'NewForm');
+
+});
+
+
+// //order
+// Route::get('/order/form', [OrderController::class, 'create']);
+// Route::post('/order/customer', [OrderController::class, 'store']);
+// // Route::get('/orderlist', [OrderController::class, 'orderlist'])->middleware('auth');
+// Route::get('/orderlist/{id}', [OrderController::class, 'orderlistBY']);
+// Route::match(['GET', 'POST'], '/orderlist', [OrderController::class, 'orderlist'])->middleware('auth');
+// Route::get('/view/orders/{refno}', [OrderController::class, 'viewOrder']);
+// Route::get('/order/NewForm', [OrderController::class, 'NewForm']);
 
 
 
@@ -70,4 +84,4 @@ Route::delete('/product/{id}', [ProductController::class, 'delete']);
 
 Route::post('/get-barangay-by-id', [CustomerController::class, 'getBarangay']);
 
-Route::get('/dashboard', [DashboardController::class, 'view']);
+Route::get('/dashboard', [DashboardController::class, 'view'])->middleware('auth');

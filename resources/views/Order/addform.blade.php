@@ -5,16 +5,17 @@
     </section>
 
 
-
     <form action="/order/customer" method="POST">
         @csrf {{-- @csrf  certificate lahat ng unauthorize post na nd galing sa system nd papasukin --}}
         <div id="Remove-Div_0" class="grid md:grid-cols-5 md:gap-6">
             <div class=" py-2.5 px-0 relative z-0 max-w-xl mb-6 group">
-                <select id="name" name="customer_name"
+                <select id="name" name="customer_name" required
                     class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                    <option value="">Select Customers</option>
                     @foreach ($customer as $row)
-                        <option value="{{ $row->id }}" {{ $row->id == $row->id ? 'selected' : '' }}>
-                            {{ $row->name }}</option>
+                        {{-- <option value="{{ $row->id }}" {{ $row->id == $row->id ? 'selected' : '' }}>     {{ $row->name }}</option>--}}
+                            <option value="{{ $row->id }}">{{ $row->name }}</option>
+
                     @endforeach
                 </select>
                 <label for="floating_email"
@@ -23,9 +24,9 @@
 
             <div class=" py-2.5 px-0 relative z-0 max-w-xl mb-6 group">
 
-                <select id="mode_of_payment" name="mode_of_payment"
+                <select id="mode_of_payment" name="mode_of_payment" required
                     class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                    <option value="" {{ old('status_payment') == '' ? 'selected' : '' }}>Select</option>
+                    <option value="" {{ old('status_payment') == '' ? 'selected' : '' }}>Select Mode Of Payment</option>
                     <option value="COD" {{ old('status_payment') == 'COD' ? 'selected' : '' }}>COD</option>
                     <option value="Gcash" {{ old('status_payment') == 'Gcash' ? 'selected' : '' }}>Gcash</option>
                     <option value="Paid" {{ old('status_payment') == 'Paid' ? 'selected' : '' }}>Paid</option>
@@ -51,7 +52,7 @@
 
             <div class=" py-2.5 px-0 relative z-0 max-w-xl mb-6 group">
 
-                <input type="number" id="grandtotal" name="grandtotal"
+                <input type="number" id="grandtotal" name="grandtotal" readonly
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder="" />
                 <label for="grandtotal"
@@ -59,7 +60,6 @@
                 peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75
                 peer-focus:-translate-y-6">Grand Total</label>
         </div>
-
 
             <div class=" py-2.5 px-0 relative z-0 max-w-xl mb-6 group">
                 <textarea id="note" name="note"
@@ -70,19 +70,17 @@
                     peer-focus:-translate-y-6">Notes</label>
             </div>
 
-
-
         </div>
 
         <div id="table">
             <div id="Remove-Div_0" class="grid md:grid-cols-5 md:gap-6">
                 <div class="relative z-0 w-full mb-6 group">
 
-                    <select id="product-dropdown0" name="product[]"
+                    <select id="product-dropdown0" name="product[]" required
                         class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                        <option value="" >Select</option>
+                        <option value="" >Select Product</option>
                         @foreach ($product as $row)
-                            <option value="{{ $row->id }}" {{ $row->id == $row->id ? 'selected' : '' }}>{{ $row->name }}</option>
+                            <option value="{{ $row->id }}">{{ $row->name }}</option>
                         @endforeach
                     </select>
 
@@ -101,7 +99,7 @@
                         peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Quantity</label>
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
-                    <input id="price0" type="number" name="price[]"
+                    <input id="price0" type="number" name="price[]" readonly
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" " required />
                     <label for="Price"
@@ -109,7 +107,7 @@
                          peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Price</label>
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="text" name="total[]" id="total0"
+                    <input type="text" name="total[]" id="total0" readonly
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" " required />
                     <label for="Total"
@@ -151,10 +149,11 @@
                 `<div  id="Remove-Div_` + i + `" class="grid md:grid-cols-5 md:gap-6">
                 <div class="relative z-0 w-full mb-6 group">
 
-                    <select id="product-dropdown` + i + `" name="product[]"
+                    <select id="product-dropdown` + i + `" name="product[]" required
                         class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                        <option value="" >Select Product</option>
                         @foreach ($product as $row)
-                            <option value="{{ $row->id }}" {{ $row->id == $row->id ? 'selected' : '' }}>
+                            <option value="{{ $row->id }}">
                                 {{ $row->name }}</option>
                         @endforeach
                     </select>
@@ -171,14 +170,14 @@
                         class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Quantity</label>
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="text"  name="price[]" id="price` + i + `"
+                    <input type="text"  name="price[]" id="price` + i + `" readonly
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" " required />
                     <label for="Price"
                         class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Price</label>
                 </div>
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="text"name="total[]" id="total` + i + `"
+                    <input type="text"name="total[]" id="total` + i + `" readonly
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" " required />
                     <label for="total"
